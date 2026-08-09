@@ -12,11 +12,11 @@ export default async function handler(req, res) {
     });
   }
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
     return res.status(500).json({
       error:
-        "Server is missing OPENAI_API_KEY. Add it in your Vercel project's Environment Variables.",
+        "Server is missing GROQ_API_KEY. Add it in your Vercel project's Environment Variables.",
     });
   }
 
@@ -41,14 +41,14 @@ Rules:
 - Base everything strictly on the provided notes. Do not invent facts not implied by the notes.`;
 
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: "llama-3.3-70b-versatile",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: notes.slice(0, 8000) },
@@ -60,7 +60,7 @@ Rules:
 
     if (!response.ok) {
       const errText = await response.text();
-      console.error("OpenAI error:", errText);
+      console.error("Groq error:", errText);
       return res.status(502).json({ error: "The AI service failed to respond. Try again." });
     }
 
