@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
+import Hero from "../components/Hero";
 
 const CONFETTI_COLORS = ["#c1443c", "#e3a34c", "#1d2b4f", "#3f8f3f"];
 
@@ -84,7 +85,9 @@ export default function Home() {
         />
       </Head>
 
-      <div className="wrap">
+      <Hero />
+
+      <div className="wrap" id="app">
         <div className="eyebrow">Card 001 · Study Tool</div>
         <h1 className="display">StudySnap AI</h1>
         <p className="sub">
